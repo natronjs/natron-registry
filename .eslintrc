@@ -1,0 +1,7 @@
+{
+  "extends": "natron",
+  "globals": {
+    "Iterable": true,
+    "Iterator": true
+  }
+}
