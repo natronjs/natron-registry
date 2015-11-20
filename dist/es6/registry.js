@@ -22,21 +22,24 @@ export class TaskRegistry {
     return this.__registry__.get(name);
   }
 
-  set(name, task) {
+  set(name, thing) {
     if (name && typeof name !== "string") {
-      [name, task] = [String(name.name), name];
+      [name, thing] = [name.name || name.meta && name.meta.name, name];
+      if (typeof name !== "string") {
+        throw new TypeError(`${ name } is not a valid name`);
+      }
     }
-    this.__registry__.set(name, task);
+    this.__registry__.set(name, thing);
     return this;
   }
 
-  resolve(name, context) {
+  resolve(name) {
     return this.get(name);
   }
 
   [Symbol.iterator]() {
     return this.__registry__[Symbol.iterator]();
   }
-} /*
-   * natron-registry
+} /**
+   * @module natron-registry
    */

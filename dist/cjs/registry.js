@@ -32,18 +32,22 @@ var TaskRegistry = exports.TaskRegistry = (function () {
     }
   }, {
     key: "set",
-    value: function set(name, task) {
+    value: function set(name, thing) {
       if (name && typeof name !== "string") {
-        var _ref = [String(name.name), name];
+        var _ref = [name.name || name.meta && name.meta.name, name];
         name = _ref[0];
-        task = _ref[1];
+        thing = _ref[1];
+
+        if (typeof name !== "string") {
+          throw new TypeError(name + " is not a valid name");
+        }
       }
-      this.__registry__.set(name, task);
+      this.__registry__.set(name, thing);
       return this;
     }
   }, {
     key: "resolve",
-    value: function resolve(name, context) {
+    value: function resolve(name) {
       return this.get(name);
     }
   }, {
@@ -59,6 +63,6 @@ var TaskRegistry = exports.TaskRegistry = (function () {
   }]);
 
   return TaskRegistry;
-})(); /*
-       * natron-registry
+})(); /**
+       * @module natron-registry
        */

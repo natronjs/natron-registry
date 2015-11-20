@@ -1,11 +1,11 @@
-/*
- * natron-registry
+/**
+ * @module natron-registry
  */
-import type {Task, TaskContext} from "natron-core";
+import type {Thing} from "natron-core";
 
 export class TaskRegistry {
 
-  __registry__: Map<string, Task>;
+  __registry__: Map<string, Thing>;
 
   constructor() {
     this.__registry__ = new Map();
@@ -23,19 +23,22 @@ export class TaskRegistry {
     this.__registry__.delete(name);
   }
 
-  get(name: string): Task {
+  get(name: string): Thing {
     return this.__registry__.get(name);
   }
 
-  set(name: string, task: Task): TaskRegistry {
+  set(name: string, thing: Thing): TaskRegistry {
     if (name && typeof name !== "string") {
-      [name, task] = [String(name.name), name];
+      [name, thing] = [name.name || (name.meta && name.meta.name), name];
+      if (typeof name !== "string") {
+        throw new TypeError(`${name} is not a valid name`);
+      }
     }
-    this.__registry__.set(name, task);
+    this.__registry__.set(name, thing);
     return this;
   }
 
-  resolve(name: string, context?: TaskContext): Task {
+  resolve(name: string): Thing {
     return this.get(name);
   }
 
