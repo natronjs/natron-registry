@@ -20,4 +20,4 @@
 [gitter-img]: https://badges.gitter.im/Join%20Chat.svg
 [gitter-url]: https://gitter.im/natronjs/natron
 
-This module is part of [Natron][natron-url].
+This module is part of [Natron][natron-url] and contains the default task registry.
